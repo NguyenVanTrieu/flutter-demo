@@ -1,6 +1,7 @@
 import 'package:demo_flutter_app/src/base/base_widget.dart';
 import 'package:demo_flutter_app/src/module/login/event/login_event.dart';
 import 'package:demo_flutter_app/src/module/login/login_bloc.dart';
+import 'package:demo_flutter_app/src/shared/widget/message_dialog.dart';
 import 'package:demo_flutter_app/src/shared/widget/normal_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,21 +35,16 @@ class _LoginPageBodyState extends State<LoginPageBody> {
 
   @override
   Widget build(BuildContext context) {
-
     loginBloc = Provider.of<LoginBloc>(context);
 
     loginBloc.processEventStream.listen((event) {
       if (event is LoginSuccessEvent) {
         Navigator.pushReplacementNamed(context, '/home');
-
       }
 
       if (event is LoginFailEvent) {
-        final snackBar = SnackBar(
-          content: Text("Có lỗi"),
-          backgroundColor: Colors.red,
-        );
-        Scaffold.of(context).showSnackBar(snackBar);
+        MessageDialog.showMsgDialog(
+            context, "Thông báo !", "Sai mật khẩu hoặc tài khoản");
       }
     });
 
@@ -56,21 +52,24 @@ class _LoginPageBodyState extends State<LoginPageBody> {
       constraints: BoxConstraints.expand(),
       child: Align(
         alignment: Alignment.bottomCenter,
-        child: SingleChildScrollView(child: Column(
+        child: SingleChildScrollView(
+            child: Column(
           children: <Widget>[
             Container(
               padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
               child: Column(
-//                mainAxisAlignment: MainAxisAlignment.end,
-//            crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(
                     height: 140,
                   ),
-                  /*Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                      child: Image.asset(Images.),
-                    ),*/
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
+                    child: Container(
+                      height: 80,
+                      width: 80,
+                      child: FlutterLogo(),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
                     child: _buildUserField(),
@@ -98,6 +97,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
       ),
     );
   }
+
   Widget _buildUserField() {
     return StreamProvider<String>.value(
       initialData: null,
@@ -155,10 +155,10 @@ class _LoginPageBodyState extends State<LoginPageBody> {
             onPressed: !enable
                 ? null
                 : () {
-              onLoginClicked(
-                  username: _userController.text,
-                  password: _passController.text);
-            }),
+                    onLoginClicked(
+                        username: _userController.text,
+                        password: _passController.text);
+                  }),
       ),
     );
   }

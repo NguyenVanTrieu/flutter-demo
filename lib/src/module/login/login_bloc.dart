@@ -38,8 +38,6 @@ class LoginBloc extends BaseBloc {
     if (validate) {
       _authService.login(event.username, event.pass).then((success) {
         processEventSink.add(LoginSuccessEvent());
-      }, onError: (e) {
-        processEventSink.add(LoginFailEvent());
       }).catchError((e) {
         processEventSink.add(LoginFailEvent());
       });

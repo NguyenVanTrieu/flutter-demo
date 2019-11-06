@@ -11,7 +11,7 @@ abstract class BaseBloc extends ChangeNotifier{
   Sink<bool> get loadingSink => _loadingStreamController.sink;
 
   StreamController<BaseEvent> _processEventSubject =
-  BehaviorSubject<BaseEvent>();
+  StreamController<BaseEvent>.broadcast();
   Stream<BaseEvent> get processEventStream => _processEventSubject.stream;
   Sink<BaseEvent> get processEventSink => _processEventSubject.sink;
 

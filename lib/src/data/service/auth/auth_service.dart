@@ -14,7 +14,7 @@ class Authentication {
   Future<bool> login(String username, String password) async {
     var c = Completer<bool>();
     try {
-      oauth2
+      await oauth2
           .resourceOwnerPasswordGrant(authorizationEndpoint, username, password,
           identifier: identifier, secret: secret)
           .then((client) {
