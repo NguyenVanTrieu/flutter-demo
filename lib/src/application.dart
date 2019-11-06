@@ -14,7 +14,7 @@ class Application extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
-        '/': (context) => LoginPage(),
+        '/': (context) => LoginPageWidget(),
         '/sign-in': (context) => null,
         '/home': (context) => HomePage(),
       },

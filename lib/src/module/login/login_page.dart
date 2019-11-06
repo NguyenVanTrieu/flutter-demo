@@ -6,12 +6,12 @@ import 'package:demo_flutter_app/src/shared/widget/normal_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPageWidget extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginPageWidgetState createState() => _LoginPageWidgetState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageWidgetState extends State<LoginPageWidget> {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
