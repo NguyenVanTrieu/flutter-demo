@@ -1,6 +1,7 @@
 
 import 'package:demo_flutter_app/src/module/home/home_page.dart';
 import 'package:demo_flutter_app/src/module/login/login_page.dart';
+import 'package:demo_flutter_app/src/module/product/product_list_page.dart';
 import 'package:flutter/material.dart';
 
 class Application extends StatelessWidget {
@@ -15,8 +16,8 @@ class Application extends StatelessWidget {
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
         '/': (context) => LoginPageWidget(),
-        '/sign-in': (context) => null,
-        '/home': (context) => HomePage(),
+        '/product': (context) => ProductListWidget(),
+        '/sell': (context) => HomePage(),
       },
     );
   }

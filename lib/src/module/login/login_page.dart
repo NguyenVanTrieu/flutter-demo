@@ -39,7 +39,7 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
 
     loginBloc.processEventStream.listen((event) {
       if (event is LoginSuccessEvent) {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/product');
       }
 
       if (event is LoginFailEvent) {

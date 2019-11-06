@@ -26,7 +26,7 @@ class DrawerMenu extends StatelessWidget {
           ),
           ListTile(
             onTap: (){
-
+              Navigator.pushReplacementNamed(context, '/product');
             },
             title: Text("Sản phẩm"),
             leading: Icon(Icons.photo_camera),
