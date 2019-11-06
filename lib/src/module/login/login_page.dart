@@ -37,6 +37,21 @@ class _LoginPageBodyState extends State<LoginPageBody> {
 
     loginBloc = Provider.of<LoginBloc>(context);
 
+    loginBloc.processEventStream.listen((event) {
+      if (event is LoginSuccessEvent) {
+        Navigator.pushReplacementNamed(context, '/home');
+
+      }
+
+      if (event is LoginFailEvent) {
+        final snackBar = SnackBar(
+          content: Text("Có lỗi"),
+          backgroundColor: Colors.red,
+        );
+        Scaffold.of(context).showSnackBar(snackBar);
+      }
+    });
+
     return Container(
       constraints: BoxConstraints.expand(),
       child: Align(
@@ -69,7 +84,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                     child: SizedBox(
                       width: double.infinity,
                       height: 56,
-                      child: _buildSignInBtn(),
+                      child: _buildLoginBtn(),
                     ),
                   ),
                 ],
@@ -86,7 +101,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
   Widget _buildUserField() {
     return StreamProvider<String>.value(
       initialData: null,
-      value: loginBloc.phoneStream,
+      value: loginBloc.usernameStream,
       child: Consumer<String>(
         builder: (context, msg, child) => TextField(
           controller: _userController,
@@ -130,7 +145,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
     );
   }
 
-  Widget _buildSignInBtn() {
+  Widget _buildLoginBtn() {
     return StreamProvider<bool>.value(
       initialData: true,
       value: loginBloc.btnStream,
@@ -140,18 +155,18 @@ class _LoginPageBodyState extends State<LoginPageBody> {
             onPressed: !enable
                 ? null
                 : () {
-              onSignInClicked(
-                  phone: _userController.text,
+              onLoginClicked(
+                  username: _userController.text,
                   password: _passController.text);
             }),
       ),
     );
   }
 
-  void onSignInClicked({String phone, String password}) {
+  void onLoginClicked({String username, String password}) {
     loginBloc.event.add(
       LoginEvent(
-        phone: phone,
+        username: username,
         pass: password,
       ),
     );

@@ -21,10 +21,13 @@ class BaseContainer extends StatelessWidget {
   }
 }
 
-class PageContainer extends BaseContainer{
+class PageContainer extends StatelessWidget{
+
+  final Widget child;
+  final List<SingleChildCloneableWidget> providers;
   final String title;
   final List<Widget> actions;
-  PageContainer({this.title, child, providers, this.actions});
+  PageContainer({this.title, this.child, this.providers, this.actions});
 
   @override
   Widget build(BuildContext context) {
