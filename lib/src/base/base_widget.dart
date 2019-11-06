@@ -1,3 +1,4 @@
+import 'package:demo_flutter_app/src/shared/widget/drawer_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,7 +44,7 @@ class PageContainer extends StatelessWidget{
           style: TextStyle(color: Colors.white),
         ),
       ),
-      drawer: null,
+      drawer: DrawerMenu(),
     );
   }
 }
