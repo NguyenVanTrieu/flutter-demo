@@ -15,7 +15,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   @override
   Widget build(BuildContext context) {
     return BaseContainer(
-      child: LoginPageBody(),
+      child: _LoginPageBody(),
       providers: [
         ChangeNotifierProvider(builder: (context) => LoginBloc()),
       ],
@@ -23,12 +23,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   }
 }
 
-class LoginPageBody extends StatefulWidget {
+class _LoginPageBody extends StatefulWidget {
   @override
   _LoginPageBodyState createState() => _LoginPageBodyState();
 }
 
-class _LoginPageBodyState extends State<LoginPageBody> {
+class _LoginPageBodyState extends State<_LoginPageBody> {
   TextEditingController _userController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   LoginBloc loginBloc;
