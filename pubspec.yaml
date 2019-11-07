@@ -32,6 +32,7 @@ dev_dependencies:
   dio: ^3.0.3
   oauth2: ^1.4.0
   flutter_secure_storage: ^3.3.1+1
+  decimal: ^0.3.5
 
 
 # For information on the generic Dart part of this file, see the
