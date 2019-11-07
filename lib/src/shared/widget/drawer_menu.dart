@@ -12,14 +12,14 @@ class DrawerMenu extends StatelessWidget {
           ),
           ListTile(
             onTap: (){
-
+              Navigator.pushReplacementNamed(context, '/sell');
             },
             title: Text("Bán hàng"),
             leading: Icon(Icons.file_upload),
           ),
           ListTile(
             onTap: (){
-
+              Navigator.pushReplacementNamed(context, '/invoice');
             },
             title: Text("Hóa đơn"),
             leading: Icon(Icons.view_headline),
@@ -36,7 +36,7 @@ class DrawerMenu extends StatelessWidget {
           ),
           ListTile(
             onTap: (){
-
+              Navigator.pushReplacementNamed(context, '/');
             },
             title: Text("Đăng xuất"),
             leading: Icon(Icons.exit_to_app),

@@ -1,5 +1,7 @@
 
 import 'package:demo_flutter_app/src/module/home/home_page.dart';
+import 'package:demo_flutter_app/src/module/invoice/create/invoice_create_page.dart';
+import 'package:demo_flutter_app/src/module/invoice/list/invoice_list_page.dart';
 import 'package:demo_flutter_app/src/module/login/login_page.dart';
 import 'package:demo_flutter_app/src/module/product/product_list_page.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,8 @@ class Application extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/': (context) => LoginPageWidget(),
         '/product': (context) => ProductListWidget(),
-        '/sell': (context) => HomePage(),
+        '/sell': (context) => InvoiceCreateWidget(),
+        '/invoice': (context) => InvoiceListWidget(),
       },
     );
   }
