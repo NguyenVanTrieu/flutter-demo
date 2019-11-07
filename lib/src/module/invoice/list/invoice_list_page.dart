@@ -1,5 +1,5 @@
 import 'package:demo_flutter_app/src/base/base_widget.dart';
-import 'package:demo_flutter_app/src/module/invoice/create/invoice_create_bloc.dart';
+import 'package:demo_flutter_app/src/module/invoice/list/invoice_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 class InvoiceListWidget extends StatelessWidget {
@@ -8,7 +8,7 @@ class InvoiceListWidget extends StatelessWidget {
     return PageContainer(
       title: "Danh sách hóa đơn",
       providers: [
-        ChangeNotifierProvider(builder: (context) => InvoiceCreateBloc()),
+        ChangeNotifierProvider(builder: (context) => InvoiceListBloc()),
       ],
       child: _InvoiceListBody(),
     );

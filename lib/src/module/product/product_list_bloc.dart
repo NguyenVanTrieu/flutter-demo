@@ -16,7 +16,7 @@ class ProductListBloc extends BaseBloc {
   Future<List<Product>> pageData(int previousCount) async {
 
     List<Product> products;
-    await _productRepository.getProducts(null, (previousCount / 12).floor(), 12).then((value){
+    await _productRepository.getProducts(null, (previousCount / 14).floor(), 14).then((value){
       products = value.items;
     });
     return products;

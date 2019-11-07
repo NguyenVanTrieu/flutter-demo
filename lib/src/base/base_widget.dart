@@ -43,6 +43,7 @@ class PageContainer extends StatelessWidget{
           title,
           style: TextStyle(color: Colors.white),
         ),
+        actions: actions,
       ),
       drawer: DrawerMenu(),
     );

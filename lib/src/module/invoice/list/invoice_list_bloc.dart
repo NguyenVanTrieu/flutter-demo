@@ -3,7 +3,6 @@ import 'package:demo_flutter_app/src/base/base_event.dart';
 
 class InvoiceListBloc extends BaseBloc {
 
-
   @override
   void dispatchEvent(BaseEvent event) {
 
