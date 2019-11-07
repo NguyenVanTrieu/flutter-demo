@@ -14,13 +14,12 @@ class InvoiceCreateBloc extends BaseBloc {
   InvoiceCreateBloc() {
     invoice = Invoice.newInvoice();
     invoice.id = IdHelper.genId();
-
+    invoice.amount = Decimal.zero;
     _productRepository = ProductRepository();
   }
 
   @override
   void dispatchEvent(BaseEvent event) {
-    print("123");
     switch (event.runtimeType) {
       case PickProductEvent:
         handlePickProductEvent(event);
@@ -30,24 +29,8 @@ class InvoiceCreateBloc extends BaseBloc {
 
   void handlePickProductEvent(BaseEvent event) {
     PickProductEvent productEvent = event as PickProductEvent;
-    invoice.amount = invoice.amount + productEvent.product.price;
 
-    invoice.details.forEach((detail) {
-      if (detail.productId.compareTo(productEvent.product.id) == 0) {
-        detail.quantity = detail.quantity + Decimal.one;
-      } else {
-        InvoiceDetail detail = InvoiceDetail(
-            id: IdHelper.genId(),
-            invoiceId: invoice.id,
-            productId: productEvent.product.id,
-            productName: productEvent.product.name,
-            quantity: Decimal.one,
-            price: productEvent.product.price,
-            status: "ACTIVE",
-        );
-        invoice.details.add(detail);
-      }
-    });
+    invoice.addProduct(productEvent.product);
 
     invoice.details.forEach((detail) {
       print(detail.productName);

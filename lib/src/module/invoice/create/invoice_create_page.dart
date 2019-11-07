@@ -47,7 +47,6 @@ class __InvoiceCreateBodyState extends State<_InvoiceCreateBody> {
   Widget _buildRow(Product product) {
     return InkWell(
       onTap: () {
-        print("sdfsd");
         onPickProduct(product: product);
       },
       child: Container(
