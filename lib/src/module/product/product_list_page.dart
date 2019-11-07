@@ -1,7 +1,7 @@
 import 'package:demo_flutter_app/src/base/base_widget.dart';
 import 'package:demo_flutter_app/src/model/product.dart';
 import 'package:demo_flutter_app/src/module/product/product_list_bloc.dart';
-import 'package:demo_flutter_app/src/shared/widget/message_dialog.dart';
+import 'package:paging/paging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,33 +32,10 @@ class __ProductListBodyState extends State<_ProductListBody> {
 
     return Container(
       constraints: BoxConstraints.expand(),
-      child: StreamProvider<dynamic>.value(
-          initialData: null,
-//          value: _productListBloc.listProductStream,
-          value: _productListBloc.getProductList(),
-          catchError: (context, error) {
-            return error;
-          },
-          child: Consumer<dynamic>(
-            builder: (context, data, child) {
-              if(data == null){
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if(data is List<Product>){
-                return ListView.builder(
-                    itemCount: data.length,
-                    itemBuilder: (context, index) {
-                      return _buildRow(data[index]);
-                    });
-              }
-
-              MessageDialog.showMsgDialog(
-                  context, "Thông báo !", "Có lỗi");
-              return null;
-            },
-          )),
+      child: Pagination(
+        pageBuilder: (currentListSize) => _productListBloc.pageData(currentListSize),
+        itemBuilder: (index, item) => _buildRow(item),
+      ),
     );
   }
 

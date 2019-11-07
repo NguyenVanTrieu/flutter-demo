@@ -2,31 +2,35 @@ import 'dart:async';
 import 'package:decimal/decimal.dart';
 import 'package:demo_flutter_app/src/base/base_bloc.dart';
 import 'package:demo_flutter_app/src/base/base_event.dart';
+import 'package:demo_flutter_app/src/data/repository/product_repository.dart';
+import 'package:demo_flutter_app/src/model/list_paged.dart';
 import 'package:demo_flutter_app/src/model/product.dart';
 
 class ProductListBloc extends BaseBloc {
 
-  List<Product> products = [
-    for(int i = 0; i < 22; i++) Product("i_$i", "name_$i", Decimal.fromInt(i))
-  ];
-
-  StreamController<List<Product>> _streamControllerListProduct = StreamController<List<Product>>();
+/*  StreamController<List<Product>> _streamControllerListProduct = StreamController<List<Product>>();
   Stream<List<Product>> get listProductStream => _streamControllerListProduct.stream;
-  Sink<List<Product>> get _listProductSink => _streamControllerListProduct.sink;
+  Sink<List<Product>> get _listProductSink => _streamControllerListProduct.sink;*/
+
+  ProductRepository _productRepository = ProductRepository();
 
   @override
   void dispatchEvent(BaseEvent event) {
 
   }
 
-  Stream<List<Product>> getProductList() {
-    _listProductSink.add(products);
-    return listProductStream;
+  Future<List<Product>> pageData(int previousCount) async {
+
+    List<Product> products;
+    await _productRepository.getProducts(null, (previousCount / 12).floor(), 12).then((value){
+      products = value.items;
+    });
+    return products;
   }
 
   @override
   void dispose() {
-    _streamControllerListProduct.close();
+//    _streamControllerListProduct.close();
 
     super.dispose();
   }

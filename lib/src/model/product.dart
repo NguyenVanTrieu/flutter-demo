@@ -7,10 +7,10 @@ class Product{
 
   Product(this._id, this._name, this._price);
 
-  Product.fromMap(Map<String, dynamic> map) {
+  Product.fromJson( map){
     _id = map['id'];
-    _name = map['name'];
-    _price = map['price'];
+    _name = map['productName'];
+    _price = Decimal.parse(map['price'].toString());
   }
 
   String get id => _id;
