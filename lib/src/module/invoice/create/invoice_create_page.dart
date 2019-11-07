@@ -1,5 +1,6 @@
 import 'package:demo_flutter_app/src/base/base_widget.dart';
 import 'package:demo_flutter_app/src/model/product.dart';
+import 'package:demo_flutter_app/src/module/invoice/create/billing/invoice_billing_page.dart';
 import 'package:demo_flutter_app/src/module/invoice/create/event/pick_product.dart';
 import 'package:demo_flutter_app/src/module/invoice/create/invoice_create_bloc.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +10,23 @@ import 'package:paging/paging.dart';
 class InvoiceCreateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    InvoiceCreateBloc baseBloc = InvoiceCreateBloc();
+
     return PageContainer(
       title: "Bán hàng",
       providers: [
-        ChangeNotifierProvider(builder: (context) => InvoiceCreateBloc()),
+        ChangeNotifierProvider(builder: (context) => baseBloc),
       ],
       child: _InvoiceCreateBody(),
+      baseBloc: baseBloc,
       actions: <Widget>[
-        IconButton(icon: Icon(Icons.shopping_cart), onPressed: () => {})
+        IconButton(
+            icon: Icon(Icons.shopping_cart), onPressed: () => {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => InvoiceBillingWidget(invoice: baseBloc.invoice,),
+          ),)
+        }),
       ],
     );
   }

@@ -2,20 +2,21 @@ import 'package:demo_flutter_app/src/base/base_bloc.dart';
 import 'package:demo_flutter_app/src/base/base_event.dart';
 import 'package:demo_flutter_app/src/data/repository/product_repository.dart';
 import 'package:demo_flutter_app/src/model/invoice.dart';
+import 'package:demo_flutter_app/src/model/list_paged.dart';
 import 'package:demo_flutter_app/src/model/product.dart';
 import 'package:demo_flutter_app/src/module/invoice/create/event/pick_product.dart';
 import 'package:demo_flutter_app/src/utils/iist_id_helper.dart';
 import 'package:decimal/decimal.dart';
 
 class InvoiceCreateBloc extends BaseBloc {
-  ProductRepository _productRepository;
+//  ProductRepository _productRepository;
   Invoice invoice;
 
   InvoiceCreateBloc() {
     invoice = Invoice.newInvoice();
     invoice.id = IdHelper.genId();
     invoice.amount = Decimal.zero;
-    _productRepository = ProductRepository();
+//    _productRepository = ProductRepository();
   }
 
   @override
@@ -38,12 +39,13 @@ class InvoiceCreateBloc extends BaseBloc {
   }
 
   Future<List<Product>> pageProducts(int previousCount) async {
-    List<Product> products;
-    await _productRepository
-        .getProducts(null, (previousCount / 14).floor(), 14)
-        .then((value) {
-      products = value.items;
-    });
+    /*ListPaged<Product> products =
+    await _productRepository.getProducts(null, (previousCount / 14).floor(), 14);
+    return products.items;*/
+
+    List<Product> products = [
+      for(int i = 0; i < 22; i++) Product("i_$i", "name_$i", Decimal.fromInt(i))
+    ];
     return products;
   }
 

@@ -164,11 +164,12 @@ class _LoginPageBodyState extends State<_LoginPageBody> {
   }
 
   void onLoginClicked({String username, String password}) {
-    loginBloc.event.add(
+    Navigator.pushReplacementNamed(context, '/sell');
+    /*loginBloc.event.add(
       LoginEvent(
         username: username,
         pass: password,
       ),
-    );
+    );*/
   }
 }
