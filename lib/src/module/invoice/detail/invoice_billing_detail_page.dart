@@ -43,7 +43,7 @@ class _InvoiceBillingDetailBodyState extends State<_InvoiceBillingDetailBody> {
         return Column(
           children: <Widget>[
             Expanded(
-              child: invoice.invoiceDetails != null && invoice.invoiceDetails.isNotEmpty
+              child: invoice != null && invoice.invoiceDetails != null && invoice.invoiceDetails.isNotEmpty
                   ? ListView.builder(
                 itemCount: invoice.invoiceDetails.length,
                 itemBuilder: (context, index) {
@@ -61,7 +61,7 @@ class _InvoiceBillingDetailBodyState extends State<_InvoiceBillingDetailBody> {
   }
 
   Widget _buildPaymentWidget(Invoice invoice) {
-    return Container(
+    return invoice == null ? Container() :Container(
       height: 100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
