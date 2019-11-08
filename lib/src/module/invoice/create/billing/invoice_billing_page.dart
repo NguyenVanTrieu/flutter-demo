@@ -20,7 +20,8 @@ class InvoiceBillingWidget extends StatelessWidget {
       ),
       providers: [
         Provider(builder: (context) => invoice),
-        ChangeNotifierProvider(builder: (context) => InvoiceBillingBloc(invoice: invoice)),
+        ChangeNotifierProvider(
+            builder: (context) => InvoiceBillingBloc(invoice: invoice)),
       ],
       child: _InvoiceBillingBody(),
     );
@@ -47,8 +48,7 @@ class _InvoiceBillingBodyState extends State<_InvoiceBillingBody> {
       }
 
       if (event is BillPamentFail) {
-        MessageDialog.showMsgDialog(
-            context, "Thông báo !", "Lỗi xảy ra");
+        MessageDialog.showMsgDialog(context, "Thông báo !", "Lỗi xảy ra");
       }
     });
 
@@ -62,12 +62,11 @@ class _InvoiceBillingBodyState extends State<_InvoiceBillingBody> {
                     return _buildRow(invoice.invoiceDetails[index]);
                   },
                 )
-              : null,
+              : Container(),
         ),
         _buildPaymentWidget(invoice)
       ],
     );
-
   }
 
   Widget _buildPaymentWidget(Invoice invoice) {
@@ -85,9 +84,13 @@ class _InvoiceBillingBodyState extends State<_InvoiceBillingBody> {
           ),
           NormalButton(
             title: "Thanh toán",
-            onPressed: () {
-              _invoiceBillingBloc.event.add(BillPaymentEvent(invoice: invoice));
-            },
+            onPressed: invoice.invoiceDetails == null ||
+                    invoice.invoiceDetails.isNotEmpty
+                ? null
+                : () {
+                    _invoiceBillingBloc.event
+                        .add(BillPaymentEvent(invoice: invoice));
+                  },
           )
         ],
       ),
