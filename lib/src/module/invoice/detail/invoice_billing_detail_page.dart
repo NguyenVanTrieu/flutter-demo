@@ -1,16 +1,13 @@
 import 'package:demo_flutter_app/src/base/base_widget.dart';
 import 'package:demo_flutter_app/src/model/invoice.dart';
-import 'package:demo_flutter_app/src/module/invoice/create/billing/invoice_billing_bloc.dart';
-import 'package:demo_flutter_app/src/module/invoice/create/event/bill_payment_event.dart';
-import 'package:demo_flutter_app/src/shared/widget/message_dialog.dart';
-import 'package:demo_flutter_app/src/shared/widget/normal_button.dart';
+import 'package:demo_flutter_app/src/module/invoice/detail/invoice_billing_detail_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class InvoiceBillingWidget extends StatelessWidget {
-  final Invoice invoice;
+class InvoiceBillingDetailWidget extends StatelessWidget {
+  final String invoiceId;
 
-  InvoiceBillingWidget({this.invoice});
+  InvoiceBillingDetailWidget({this.invoiceId});
 
   @override
   Widget build(BuildContext context) {
@@ -19,60 +16,54 @@ class InvoiceBillingWidget extends StatelessWidget {
         title: Text("Hóa đơn"),
       ),
       providers: [
-        Provider(builder: (context) => invoice),
-        ChangeNotifierProvider(builder: (context) => InvoiceBillingBloc(invoice: invoice)),
+        Provider(builder: (context) => invoiceId),
+        ChangeNotifierProvider(builder: (context) => InvoiceBillingDetailBloc()),
       ],
-      child: _InvoiceBillingBody(),
+      child: _InvoiceBillingDetailBody(),
     );
   }
 }
 
-class _InvoiceBillingBody extends StatefulWidget {
+class _InvoiceBillingDetailBody extends StatefulWidget {
   @override
-  _InvoiceBillingBodyState createState() => _InvoiceBillingBodyState();
+  _InvoiceBillingDetailBodyState createState() => _InvoiceBillingDetailBodyState();
 }
 
-class _InvoiceBillingBodyState extends State<_InvoiceBillingBody> {
-  Invoice invoice;
-  InvoiceBillingBloc _invoiceBillingBloc;
+class _InvoiceBillingDetailBodyState extends State<_InvoiceBillingDetailBody> {
 
   @override
   Widget build(BuildContext context) {
-    invoice = Provider.of<Invoice>(context);
-    _invoiceBillingBloc = Provider.of<InvoiceBillingBloc>(context);
+    String invoiceId = Provider.of<String>(context);
+    InvoiceBillingDetailBloc billingDetailBloc = Provider.of<InvoiceBillingDetailBloc>(context);
 
-    _invoiceBillingBloc.processEventStream.listen((event) {
-      if (event is BillPamentSuccess) {
-        Navigator.pushReplacementNamed(context, '/sell');
-      }
 
-      if (event is BillPamentFail) {
-        MessageDialog.showMsgDialog(
-            context, "Thông báo !", "Lỗi xảy ra");
-      }
-    });
-
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: invoice.invoiceDetails != null
-              ? ListView.builder(
-                  itemCount: invoice.invoiceDetails.length,
-                  itemBuilder: (context, index) {
-                    return _buildRow(invoice.invoiceDetails[index]);
-                  },
-                )
-              : null,
-        ),
-        _buildPaymentWidget(invoice)
-      ],
+    return FutureBuilder<Invoice>(
+      future: billingDetailBloc.getInvoice(invoiceId),
+      builder: (context, snapshot){
+        Invoice invoice = snapshot.data;
+        return Column(
+          children: <Widget>[
+            Expanded(
+              child: invoice.invoiceDetails != null
+                  ? ListView.builder(
+                itemCount: invoice.invoiceDetails.length,
+                itemBuilder: (context, index) {
+                  return _buildRow(invoice.invoiceDetails[index]);
+                },
+              )
+                  : Row(),
+            ),
+            _buildPaymentWidget(invoice)
+          ],
+        );
+      },
     );
 
   }
 
   Widget _buildPaymentWidget(Invoice invoice) {
     return Container(
-      height: 150,
+      height: 100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -83,12 +74,6 @@ class _InvoiceBillingBodyState extends State<_InvoiceBillingBody> {
           SizedBox(
             height: 10,
           ),
-          NormalButton(
-            title: "Thanh toán",
-            onPressed: () {
-              _invoiceBillingBloc.event.add(BillPaymentEvent(invoice: invoice));
-            },
-          )
         ],
       ),
     );

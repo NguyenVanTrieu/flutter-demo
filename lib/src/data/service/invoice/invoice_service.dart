@@ -30,4 +30,10 @@ class InvoiceService{
       },
     );
   }
+
+  Future<Response> getInvoice(String invoiceId) {
+    return IISTClient().dio.get(
+      "/api/v1/invoices/" + invoiceId,
+    );
+  }
 }

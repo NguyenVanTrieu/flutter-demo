@@ -1,5 +1,6 @@
 import 'package:demo_flutter_app/src/base/base_widget.dart';
 import 'package:demo_flutter_app/src/model/invoice.dart';
+import 'package:demo_flutter_app/src/module/invoice/detail/invoice_billing_detail_page.dart';
 import 'package:demo_flutter_app/src/module/invoice/list/invoice_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,16 @@ class _InvoiceListBodyState extends State<_InvoiceListBody> {
 
   Widget _buildRow(Invoice invoice) {
     return InkWell(
-      onTap: () {},
+      onTap: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => InvoiceBillingDetailWidget(
+              invoiceId: invoice.id,
+            ),
+          ),
+        )
+      },
       child: Container(
         margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
         height: 60,

@@ -48,7 +48,10 @@ class Invoice {
     status = map['status'];
     amount = Decimal.parse(map['amount'].toString());
     regUser = map['regUser'];
-//    regDttm = DateTime.parse(map['regDttm']);
+    if(map["invoiceDetails"] != null){
+      var details = map["invoiceDetails"] as List;
+      invoiceDetails = details.map((detail) => InvoiceDetail.fromJson(map)).toList();
+    }
   }
 
   Map<String, dynamic> toJson() => {
@@ -92,6 +95,17 @@ class InvoiceDetail {
         "price": price.toDouble(),
         "status": status,
       };
+
+  InvoiceDetail.fromJson(map){
+    id = map['id'];
+    invoiceId = map['invoiceId'];
+    status = map['status'];
+    productId = map['productId'];
+    productName = map['productName'];
+    quantity = Decimal.parse(map['quantity'].toString());
+    price = Decimal.parse(map['price'].toString());
+    regUser = map['regUser'];
+  }
 
   factory InvoiceDetail.fromProduct(String invoiceId, Product product) {
     return InvoiceDetail(

@@ -33,6 +33,17 @@ class InvoiceRepository{
     return c.future;
   }
 
+  Future<Invoice> getInvoice(String invoiceId) async{
+
+    var c = Completer<Invoice>();
+
+    var response = await invoiceService.getInvoice(invoiceId);
+    var invoice = Invoice.fromJson(response.data);
+
+    c.complete(invoice);
+    return c.future;
+  }
+
   Future<bool> createInvoice(Invoice invoice) async{
 
     var c = Completer<bool>();
