@@ -3,7 +3,7 @@ import 'package:demo_flutter_app/src/base/base_event.dart';
 import 'package:demo_flutter_app/src/data/repository/product_repository.dart';
 import 'package:demo_flutter_app/src/model/invoice.dart';
 import 'package:demo_flutter_app/src/model/product.dart';
-import 'package:demo_flutter_app/src/module/invoice/create/event/pick_product.dart';
+import 'package:demo_flutter_app/src/module/invoice/create/event/pick_product_event.dart';
 import 'package:demo_flutter_app/src/utils/iist_id_helper.dart';
 import 'package:decimal/decimal.dart';
 

@@ -1,5 +1,7 @@
 import 'package:demo_flutter_app/src/base/base_widget.dart';
 import 'package:demo_flutter_app/src/model/invoice.dart';
+import 'package:demo_flutter_app/src/module/invoice/create/billing/invoice_billing_bloc.dart';
+import 'package:demo_flutter_app/src/module/invoice/create/event/bill_payment_event.dart';
 import 'package:demo_flutter_app/src/shared/widget/normal_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +19,7 @@ class InvoiceBillingWidget extends StatelessWidget {
       ),
       providers: [
         Provider(builder: (context) => invoice),
+        ChangeNotifierProvider(builder: (context) => InvoiceBillingBloc(invoice: invoice)),
       ],
       child: _InvoiceBillingBody(),
     );
@@ -30,9 +33,12 @@ class _InvoiceBillingBody extends StatefulWidget {
 
 class _InvoiceBillingBodyState extends State<_InvoiceBillingBody> {
   Invoice invoice;
+  InvoiceBillingBloc _invoiceBillingBloc;
+
   @override
   Widget build(BuildContext context) {
     invoice = Provider.of<Invoice>(context);
+    _invoiceBillingBloc = Provider.of<InvoiceBillingBloc>(context);
     return Column(
       children: <Widget>[
         Expanded(
@@ -66,7 +72,9 @@ class _InvoiceBillingBodyState extends State<_InvoiceBillingBody> {
           ),
           NormalButton(
             title: "Thanh toán",
-            onPressed: () {},
+            onPressed: () {
+              _invoiceBillingBloc.event.add(BillPaymentEvent(invoice: invoice));
+            },
           )
         ],
       ),

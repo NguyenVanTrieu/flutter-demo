@@ -1,6 +1,6 @@
 import 'package:demo_flutter_app/src/base/base_widget.dart';
 import 'package:demo_flutter_app/src/model/product.dart';
-import 'package:demo_flutter_app/src/module/invoice/create/event/pick_product.dart';
+import 'package:demo_flutter_app/src/module/invoice/create/event/pick_product_event.dart';
 import 'package:demo_flutter_app/src/module/invoice/create/billing/invoice_billing_page.dart';
 import 'package:demo_flutter_app/src/module/invoice/create/invoice_create_bloc.dart';
 import 'package:flutter/material.dart';
