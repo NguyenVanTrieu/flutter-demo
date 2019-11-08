@@ -29,12 +29,7 @@ class InvoiceCreateBloc extends BaseBloc {
 
   void handlePickProductEvent(BaseEvent event) {
     PickProductEvent productEvent = event as PickProductEvent;
-
     invoice.addProduct(productEvent.product);
-
-    invoice.details.forEach((detail) {
-      print(detail.productName);
-    });
   }
 
   Future<List<Product>> pageProducts(int previousCount) async {
