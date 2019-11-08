@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:demo_flutter_app/src/base/base_bloc.dart';
 import 'package:demo_flutter_app/src/base/base_event.dart';
 import 'package:demo_flutter_app/src/data/repository/product_repository.dart';
@@ -10,6 +12,11 @@ import 'package:decimal/decimal.dart';
 class InvoiceCreateBloc extends BaseBloc {
   ProductRepository _productRepository;
   Invoice invoice;
+
+  final StreamController<int> totalQuantity = StreamController<int>();
+  Stream<int> get totalQuantityStream => totalQuantity.stream;
+  Sink<int> get totalQuantitySink => totalQuantity.sink;
+  int _totalQuantity = 0;
 
   InvoiceCreateBloc() {
     invoice = Invoice.newInvoice();
@@ -31,6 +38,9 @@ class InvoiceCreateBloc extends BaseBloc {
   void handlePickProductEvent(BaseEvent event) {
     PickProductEvent productEvent = event as PickProductEvent;
     invoice.addProduct(productEvent.product);
+
+    _totalQuantity ++;
+    totalQuantitySink.add(_totalQuantity);
   }
 
   Future<List<Product>> pageProducts(int previousCount) async {
@@ -45,6 +55,7 @@ class InvoiceCreateBloc extends BaseBloc {
 
   @override
   void dispose() {
+    totalQuantity.close();
     super.dispose();
   }
 }

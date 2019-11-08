@@ -6,11 +6,11 @@ import 'package:demo_flutter_app/src/module/invoice/create/invoice_create_bloc.d
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:paging/paging.dart';
+import 'package:badges/badges.dart';
 
 class InvoiceCreateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     InvoiceCreateBloc baseBloc = InvoiceCreateBloc();
 
     return PageContainer(
@@ -21,12 +21,36 @@ class InvoiceCreateWidget extends StatelessWidget {
       child: _InvoiceCreateBody(),
       baseBloc: baseBloc,
       actions: <Widget>[
-        IconButton(
-            icon: Icon(Icons.shopping_cart), onPressed: () => {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => InvoiceBillingWidget(invoice: baseBloc.invoice,),
-          ),)
-        }),
+        StreamProvider<int>.value(
+          initialData: 0,
+          value: baseBloc.totalQuantityStream,
+          child: Consumer<int>(
+              builder: (context, msg, child) => GestureDetector(
+                    onTap: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InvoiceBillingWidget(
+                            invoice: baseBloc.invoice,
+                          ),
+                        ),
+                      )
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(top: 15, right: 20),
+                      child: Badge(
+                        badgeContent: Text(
+                          msg.toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        child: Icon(Icons.shopping_cart),
+                      ),
+                    ),
+                  )),
+        ),
       ],
     );
   }
@@ -38,17 +62,16 @@ class _InvoiceCreateBody extends StatefulWidget {
 }
 
 class __InvoiceCreateBodyState extends State<_InvoiceCreateBody> {
-
   InvoiceCreateBloc _invoiceCreateBloc;
   @override
   Widget build(BuildContext context) {
-
     _invoiceCreateBloc = Provider.of<InvoiceCreateBloc>(context);
 
     return Container(
       constraints: BoxConstraints.expand(),
       child: Pagination(
-        pageBuilder: (currentListSize) => _invoiceCreateBloc.pageProducts(currentListSize),
+        pageBuilder: (currentListSize) =>
+            _invoiceCreateBloc.pageProducts(currentListSize),
         itemBuilder: (index, item) => _buildRow(item),
       ),
     );
@@ -80,12 +103,8 @@ class __InvoiceCreateBodyState extends State<_InvoiceCreateBody> {
   }
 
   void onPickProduct({Product product}) {
-
     _invoiceCreateBloc.event.add(
-
-      PickProductEvent(
-       product: product
-      ),
+      PickProductEvent(product: product),
     );
   }
 }
