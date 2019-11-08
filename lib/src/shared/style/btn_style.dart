@@ -4,6 +4,6 @@ import '../app_color.dart';
 
 class BtnStyle {
   static TextStyle normal() {
-    return TextStyle(fontSize: 17);
+    return TextStyle(fontSize: 17, color: Colors.white);
   }
 }

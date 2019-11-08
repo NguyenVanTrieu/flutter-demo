@@ -24,14 +24,20 @@ class Invoice{
       return this;
     }
 
+    bool flagAdd = true;
     for(int i = 0; i < this.details.length; i ++){
       InvoiceDetail detail = this.details[i];
       if (detail.productId.compareTo(product.id) == 0) {
         detail.quantity = detail.quantity + Decimal.one;
-      } else {
-        InvoiceDetail detail = InvoiceDetail.fromProduct(id, product);
-        this.details.add(detail);
+        flagAdd = false;
+        return this;
       }
+    }
+
+    if(flagAdd) {
+      InvoiceDetail detail = InvoiceDetail.fromProduct(this.id, product);
+      this.details.add(detail);
+      return this;
     }
     return this;
   }
