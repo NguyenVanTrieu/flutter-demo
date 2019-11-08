@@ -10,7 +10,7 @@ class ListPaged<T>{
 
   factory ListPaged.fromJson(map, T Function(Map<String, dynamic> m) itemFromJson){
     var list = map["items"] as List;
-    var listItems = list.map((baseModel) => itemFromJson(baseModel)).toList();
+    var listItems = list.map((model) => itemFromJson(model)).toList();
     return ListPaged(
       items: listItems,
       pageSize:  map["pageSize"],

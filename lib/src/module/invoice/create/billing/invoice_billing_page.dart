@@ -2,6 +2,7 @@ import 'package:demo_flutter_app/src/base/base_widget.dart';
 import 'package:demo_flutter_app/src/model/invoice.dart';
 import 'package:demo_flutter_app/src/module/invoice/create/billing/invoice_billing_bloc.dart';
 import 'package:demo_flutter_app/src/module/invoice/create/event/bill_payment_event.dart';
+import 'package:demo_flutter_app/src/shared/widget/message_dialog.dart';
 import 'package:demo_flutter_app/src/shared/widget/normal_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,14 +40,26 @@ class _InvoiceBillingBodyState extends State<_InvoiceBillingBody> {
   Widget build(BuildContext context) {
     invoice = Provider.of<Invoice>(context);
     _invoiceBillingBloc = Provider.of<InvoiceBillingBloc>(context);
+
+    _invoiceBillingBloc.processEventStream.listen((event) {
+      if (event is BillPamentSuccess) {
+        Navigator.pushReplacementNamed(context, '/sell');
+      }
+
+      if (event is BillPamentFail) {
+        MessageDialog.showMsgDialog(
+            context, "Thông báo !", "Lỗi xảy ra");
+      }
+    });
+
     return Column(
       children: <Widget>[
         Expanded(
-          child: invoice.details != null
+          child: invoice.invoiceDetails != null
               ? ListView.builder(
-                  itemCount: invoice.details.length,
+                  itemCount: invoice.invoiceDetails.length,
                   itemBuilder: (context, index) {
-                    return _buildRow(invoice.details[index]);
+                    return _buildRow(invoice.invoiceDetails[index]);
                   },
                 )
               : null,

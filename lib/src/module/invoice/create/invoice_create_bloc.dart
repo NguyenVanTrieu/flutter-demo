@@ -15,6 +15,7 @@ class InvoiceCreateBloc extends BaseBloc {
     invoice = Invoice.newInvoice();
     invoice.id = IdHelper.genId();
     invoice.amount = Decimal.zero;
+    invoice.status = "ACTIVE";
     _productRepository = ProductRepository();
   }
 
