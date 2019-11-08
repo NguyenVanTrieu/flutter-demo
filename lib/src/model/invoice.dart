@@ -50,7 +50,7 @@ class Invoice {
     regUser = map['regUser'];
     if(map["invoiceDetails"] != null){
       var details = map["invoiceDetails"] as List;
-      invoiceDetails = details.map((detail) => InvoiceDetail.fromJson(map)).toList();
+      invoiceDetails = details.map((detail) => InvoiceDetail.fromJson(detail)).toList();
     }
   }
 
@@ -99,11 +99,11 @@ class InvoiceDetail {
   InvoiceDetail.fromJson(map){
     id = map['id'];
     invoiceId = map['invoiceId'];
-    status = map['status'];
     productId = map['productId'];
     productName = map['productName'];
-    quantity = Decimal.parse(map['quantity'].toString());
-    price = Decimal.parse(map['price'].toString());
+    status = map['status'];
+    quantity = map['quantity'] != null ? Decimal.parse(map['quantity'].toString()) : Decimal.zero;
+    price = map['price'] != null ? Decimal.parse(map['price'].toString()) : Decimal.zero;
     regUser = map['regUser'];
   }
 

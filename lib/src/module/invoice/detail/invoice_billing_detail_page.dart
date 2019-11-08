@@ -36,7 +36,6 @@ class _InvoiceBillingDetailBodyState extends State<_InvoiceBillingDetailBody> {
     String invoiceId = Provider.of<String>(context);
     InvoiceBillingDetailBloc billingDetailBloc = Provider.of<InvoiceBillingDetailBloc>(context);
 
-
     return FutureBuilder<Invoice>(
       future: billingDetailBloc.getInvoice(invoiceId),
       builder: (context, snapshot){
@@ -44,7 +43,7 @@ class _InvoiceBillingDetailBodyState extends State<_InvoiceBillingDetailBody> {
         return Column(
           children: <Widget>[
             Expanded(
-              child: invoice.invoiceDetails != null
+              child: invoice.invoiceDetails != null && invoice.invoiceDetails.isNotEmpty
                   ? ListView.builder(
                 itemCount: invoice.invoiceDetails.length,
                 itemBuilder: (context, index) {
