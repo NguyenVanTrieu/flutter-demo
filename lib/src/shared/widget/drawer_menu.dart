@@ -1,3 +1,5 @@
+import 'package:demo_flutter_app/src/data/storage/secure_storage.dart';
+import 'package:demo_flutter_app/src/utils/iist_const.dart';
 import 'package:flutter/material.dart';
 
 class DrawerMenu extends StatelessWidget {
@@ -36,6 +38,7 @@ class DrawerMenu extends StatelessWidget {
           ),
           ListTile(
             onTap: (){
+              SecureStorage().storage.delete(key: IISTConst.JWT_KEY);
               Navigator.pushReplacementNamed(context, '/');
             },
             title: Text("Đăng xuất"),

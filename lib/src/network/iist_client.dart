@@ -1,5 +1,6 @@
 import 'package:demo_flutter_app/src/data/storage/secure_storage.dart';
 import 'package:demo_flutter_app/src/network/uri_config.dart';
+import 'package:demo_flutter_app/src/utils/iist_const.dart';
 import 'package:dio/dio.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 
@@ -17,7 +18,7 @@ class IISTClient{
   IISTClient._internal(){
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (Options option) async {
-        String jwt = await SecureStorage().storage.read(key: "jwt");
+        String jwt = await SecureStorage().storage.read(key: IISTConst.JWT_KEY);
         String token = oauth2.Credentials.fromJson(jwt).accessToken;
         if(token != null){
           option.headers["Authorization"] = "Bearer " + token;

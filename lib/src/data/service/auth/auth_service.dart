@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:demo_flutter_app/src/data/storage/secure_storage.dart';
 import 'package:demo_flutter_app/src/network/uri_config.dart';
+import 'package:demo_flutter_app/src/utils/iist_const.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 
 class Authentication {
@@ -17,7 +18,7 @@ class Authentication {
           .resourceOwnerPasswordGrant(authorizationEndpoint, username, password,
           identifier: identifier, secret: secret)
           .then((client) {
-        SecureStorage().storage.write(key: 'jwt', value: client.credentials.toJson());
+        SecureStorage().storage.write(key: IISTConst.JWT_KEY, value: client.credentials.toJson());
         c.complete(true);
       });
     } catch (e) {
