@@ -22,7 +22,7 @@ class InvoiceRepository{
     return Invoice.fromJson(map);
   }
 
-  Future<ListPaged<Invoice>> getInvoices(String search, int pageNumber, int pageSize) async{
+  Future<ListPaged<Invoice>> getInvoices(int pageNumber, int pageSize) async{
 
     var c = Completer<ListPaged<Invoice>>();
 

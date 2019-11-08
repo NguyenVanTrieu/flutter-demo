@@ -47,6 +47,8 @@ class Invoice {
     id = map['id'];
     status = map['status'];
     amount = Decimal.parse(map['amount'].toString());
+    regUser = map['regUser'];
+//    regDttm = DateTime.parse(map['regDttm']);
   }
 
   Map<String, dynamic> toJson() => {
