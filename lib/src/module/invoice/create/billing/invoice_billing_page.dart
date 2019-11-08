@@ -85,7 +85,7 @@ class _InvoiceBillingBodyState extends State<_InvoiceBillingBody> {
           NormalButton(
             title: "Thanh toán",
             onPressed: invoice.invoiceDetails == null ||
-                    invoice.invoiceDetails.isNotEmpty
+                    invoice.invoiceDetails.isEmpty
                 ? null
                 : () {
                     _invoiceBillingBloc.event
